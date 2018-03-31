@@ -1,4 +1,4 @@
-# node-express-shopDemo 练习
+# node-express 练习
 ### 开始
 1. 安装node 6.11
 2. 安装cnpm （注：为了方便起见，node_modules以上传）
@@ -14,6 +14,8 @@
 ```js
   $  node app
 ```
+#### 插件 
+-[基于bootstrap的分页插件](https://github.com/bill1012/bootstrap-pager)
 
 ######
  项目不忙的时候，练习node。加油！！！！！！

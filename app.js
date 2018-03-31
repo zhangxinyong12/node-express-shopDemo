@@ -70,11 +70,17 @@ app.post('/doLogin',function(req,res){
         };
     });
 })
-//商品
+//商品 增加分页
 app.get('/product',(req,res)=>{
-    DB.find('productList',{},(data)=>{
+    const Num=req.query.pageNum||1;
+    const Size=req.query.pageSize||10;
+    const count=DB.count('productList',{});
+    DB.limit('productList',Size,Num*Size,(data)=>{
         res.render('product',{
-            list:data
+            list:data,
+            pageNum:Num,
+            pageSize:Size,
+            con:count
         });
     });
    
@@ -143,5 +149,4 @@ app.get('/deleteOne',(req,res)=>{
         res.redirect('/product');
     })
 });
-
 app.listen(8989,'127.0.0.1');

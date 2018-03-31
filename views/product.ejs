@@ -67,10 +67,34 @@
                     </tbody>
                 </table>
             </div>
-
+            <!-- 分页 -->
+            <input type="hidden" id="count" value="<%=con%>">
+            
+            <input type="hidden" id="pageNum" value="<%=pageNum%>">
+            <input type="hidden" id="pageSize" value="<%=pageSize%>">
+            <div id="page-container-static-normal" style="display:flex;justify-content:  center;"></div>
+            <br><br><br><br>
         </div>
     </div>
 </div>
 
 </body>
+<script>
+    //分页  https://github.com/bill1012/bootstrap-pager
+    $("#page-container-static-normal").page({
+        count: $("#count").val(),//总数
+        pageSize:$("#pageSize").val(),//分页大小
+        maxPage:6,//显示分页框数量
+        pageNum:$("#pageNum").val(),//当前页
+        theme: "normal"//样式 可选 big normal
+
+    });
+    $("#page-container-static-normal").on("pageChanged", function (event, params) {
+        const pageNum=params.pageNum;
+        const pageSize=params.pageSize;
+        const url=window.location.href.split('?')[0];
+        window.location.href=url+'?pageNum='+pageNum+'&pageSize='+pageSize;
+        $(this).data("page").refresh(params);
+    })
+</script>
 </html>
