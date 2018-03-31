@@ -24,6 +24,7 @@ app.set('view engine','ejs');
 //静态文件
 app.use(express.static('public'));
 app.use('/upload',express.static('upload'));
+
 //中间件。处理登陆状态
 app.use((req,res,next)=>{
     if(req.url=='/login'||req.url=='/doLogin'){
@@ -142,4 +143,5 @@ app.get('/deleteOne',(req,res)=>{
         res.redirect('/product');
     })
 });
+
 app.listen(8989,'127.0.0.1');
