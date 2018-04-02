@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>promiseDemo</title>
+    <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>    
+</head>
+
+<body>
+    <h4>promise</h4>
+</body>
+<script>
+//   https://sp0.baidu.com/5a1Fazu8AA54nxGko9WTAnF6hhy/su?wd=%E4%BD%A0&json=1&p=3&sid=&req=2&bs=%E4%BD%A0%E5%A5%BD&pbs=%E4%BD%A0%E5%A5%BD&csor=1&pwd=%E4%BD%A0%E5%A5%BD&cb=jQuery110206854685126862949_1522630362780&_=1522630362794
+    const baidu=(ws)=>{
+        const promise=new Promise((resolve,reject)=>{
+            $.ajax({
+                url:'https://sp0.baidu.com/5a1Fazu8AA54nxGko9WTAnF6hhy/su?wd='+ws+'&json=1&_='+new Date().getTime(),
+                dataType:'jsonp',
+                jsonpCallback:'jquery_'+new Date().getTime(),
+                jsonp:'cb',
+                success:(data)=>{
+                    resolve(data);
+                },
+                error:(err)=>{
+                    reject(new Error(err));
+                }
+            });
+        });
+        return promise;
+    };
+    let n1;
+    baidu('知乎').then((data)=>{
+        n1=data.g[0].q;
+        console.log('1',n1)
+        return baidu(n1);
+    })
+    .then((data)=>{
+        console.log('2',data)
+    })
+    .catch((err)=>{
+        console.log('出错了',err)
+    })
+</script>
+
+</html>
