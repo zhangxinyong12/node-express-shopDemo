@@ -27,23 +27,29 @@ exports.find=(collectionname,json,callback)=>{
     });
 }
 //查询总数
-exports.count=(collectionname,json)=>{
+exports.count=(collectionname,json,callback)=>{
     _connectDb((db)=>{
-        return db.collection(collectionname).find(json).count();
+        const count=db.collection(collectionname).count(json,(err,data)=>{
+            callback(data);
+            
+            db.close();
+        });
+        
         
     });
 }
-//分页查询 limit 结果数量 skip 偏移量
+//分页查询 limit 结果数量 skip 偏移量 
+// find().limit(10).skip(n*10) 
 exports.limit=(collectionname,num1,num2,callback)=>{
     console.log(num1,num2)
     _connectDb((db)=>{
-        const result=db.collection(collectionname).find().skip(num2).limit(num1);
+        const result=db.collection(collectionname).find().limit(num1).skip(num2);
         result.toArray((error,data)=>{
             if(error){
                 return;
             };
-            db.close();
             callback(data);
+            db.close();
         });
     });
 }
