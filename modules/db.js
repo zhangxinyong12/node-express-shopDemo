@@ -31,8 +31,6 @@ exports.count=(collectionname,json,callback)=>{
     _connectDb((db)=>{
         const count=db.collection(collectionname).count(json,(err,data)=>{
             callback(data);
-            
-            db.close();
         });
         
         
@@ -43,13 +41,13 @@ exports.count=(collectionname,json,callback)=>{
 exports.limit=(collectionname,num1,num2,callback)=>{
     console.log(num1,num2)
     _connectDb((db)=>{
-        const result=db.collection(collectionname).find().limit(num1).skip(num2);
+        const result=db.collection(collectionname).find().skip(20).limit(10);
         result.toArray((error,data)=>{
             if(error){
                 return;
             };
+            // db.close();
             callback(data);
-            db.close();
         });
     });
 }

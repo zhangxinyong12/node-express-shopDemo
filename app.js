@@ -25,6 +25,13 @@ app.set('view engine', 'ejs');
 app.use(express.static('public'));
 app.use('/upload', express.static('upload'));
 
+app.all('*', function(req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header('Access-Control-Allow-Methods', 'PUT, GET, POST, DELETE, OPTIONS');
+    res.header("Access-Control-Allow-Headers", "X-Requested-With");
+    res.header('Access-Control-Allow-Headers', 'Content-Type');
+    next();
+});
 //中间件。处理登陆状态
 app.use((req, res, next) => {
     if (req.url == '/login' || req.url == '/doLogin') {
@@ -74,9 +81,11 @@ app.post('/doLogin', function (req, res) {
 app.get('/product', (req, res) => {
     const Num = req.query.pageNum || 1;
     const Size = req.query.pageSize || 10;
+    console.log(Num,Size)
     DB.count('productList', {}, (data) => {
         const count = data;
-        DB.limit('productList', Size, (Num - 1) * Size, (data) => {
+        DB.limit('productList',(Num - 1) * Size,Size, (data) => {
+            console.log(data);
             res.render('product', {
                 list: data,
                 pageNum: Num,

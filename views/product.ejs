@@ -92,9 +92,17 @@
     $("#page-container-static-normal").on("pageChanged", function (event, params) {
         const pageNum=params.pageNum;
         const pageSize=params.pageSize;
-        const url=window.location.href.split('?')[0];
-        window.location.href=url+'?pageNum='+pageNum+'&pageSize='+pageSize;
-        $(this).data("page").refresh(params);
+        $.ajax({
+            url:'/product',
+            data:{pageNum,pageSize},
+            success:(data)=>{
+                $(this).data("page").refresh(params);
+            },
+            err:(err)=>{
+                console.log(err)
+            }
+        })
+        
     })
 </script>
 </html>
