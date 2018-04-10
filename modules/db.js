@@ -31,6 +31,7 @@ exports.count=(collectionname,json,callback)=>{
     _connectDb((db)=>{
         const count=db.collection(collectionname).count(json,(err,data)=>{
             callback(data);
+            db.close();
         });
         
         
@@ -39,14 +40,15 @@ exports.count=(collectionname,json,callback)=>{
 //分页查询 limit 结果数量 skip 偏移量 
 // find().limit(10).skip(n*10) 
 exports.limit=(collectionname,num1,num2,callback)=>{
-    console.log(num1,num2)
+    num1=parseInt(num1);//这个地方目前还不知道为啥。可能是严格数据类型
+    num2=parseInt(num2);
     _connectDb((db)=>{
-        const result=db.collection(collectionname).find().skip(20).limit(10);
+        const result=db.collection(collectionname).find().skip(num1).limit(num2);
         result.toArray((error,data)=>{
             if(error){
                 return;
             };
-            // db.close();
+            db.close();
             callback(data);
         });
     });

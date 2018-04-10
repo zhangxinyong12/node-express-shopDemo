@@ -92,16 +92,19 @@
     $("#page-container-static-normal").on("pageChanged", function (event, params) {
         const pageNum=params.pageNum;
         const pageSize=params.pageSize;
-        $.ajax({
-            url:'/product',
-            data:{pageNum,pageSize},
-            success:(data)=>{
-                $(this).data("page").refresh(params);
-            },
-            err:(err)=>{
-                console.log(err)
-            }
-        })
+        // $.ajax({
+        //     url:'/product?t='+new Date().getTime(),
+        //     data:{pageNum,pageSize},
+        //     success:(data)=>{
+        //         $(this).data("page").refresh(params);
+        //     },
+        //     err:(err)=>{
+        //         console.log(err)
+        //     }
+        // })
+        const url=window.location.href.split('?')[0];
+        console.log(url)
+        window.location.href=url+"?pageNum="+pageNum+'&pageSize='+pageSize;
         
     })
 </script>

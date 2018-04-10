@@ -21,6 +21,7 @@ app.use(session({
 }));
 //ejs
 app.set('view engine', 'ejs');
+app.set('view cache', false);
 //静态文件
 app.use(express.static('public'));
 app.use('/upload', express.static('upload'));
@@ -70,7 +71,7 @@ app.post('/doLogin', function (req, res) {
     }, (data) => {
         if (data.length > 0) {
             req.session.userinfo = data[0];
-            res.redirect('/product');
+            res.redirect('/product?pageNum=1&pageSize=10');
         } else {
             console.log('登陆失败');
             res.send('<script>alert("密码错误");location.href="/login"</script>');
@@ -81,11 +82,9 @@ app.post('/doLogin', function (req, res) {
 app.get('/product', (req, res) => {
     const Num = req.query.pageNum || 1;
     const Size = req.query.pageSize || 10;
-    console.log(Num,Size)
     DB.count('productList', {}, (data) => {
         const count = data;
         DB.limit('productList',(Num - 1) * Size,Size, (data) => {
-            console.log(data);
             res.render('product', {
                 list: data,
                 pageNum: Num,
