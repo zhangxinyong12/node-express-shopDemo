@@ -76,8 +76,9 @@ app.post('/doLogin', function (req, res) {
 })
 //商品 增加分页
 app.get('/product', (req, res) => {
-    const Num = req.query.pageNum || 1;
-    const Size = req.query.pageSize || 10;
+    const Num =Number(req.query.pageNum || 1);//这个地方
+    const Size =Number(req.query.pageSize || 10);
+    console.log('10'-1);
     DB.count('productList', {}, (data) => {
         const count = data;
         DB.limit('productList',(Num - 1) * Size,Size, (data) => {

@@ -38,9 +38,9 @@ exports.count=(collectionname,json,callback)=>{
     });
 }
 //分页查询 limit 结果数量 skip 偏移量 
-// find().limit(10).skip(n*10) 
+// find().skip((page-1)*n).skip(n) 
 exports.limit=(collectionname,num1,num2,callback)=>{
-    num1=parseInt(num1);//这个地方目前还不知道为啥。可能是严格数据类型
+    num1=parseInt(num1);//这个地方再转换一次。确保参数为 number
     num2=parseInt(num2);
     _connectDb((db)=>{
         const result=db.collection(collectionname).find().skip(num1).limit(num2);
