@@ -21,18 +21,10 @@ app.use(session({
 }));
 //ejs
 app.set('view engine', 'ejs');
-app.set('view cache', false);
 //静态文件
 app.use(express.static('public'));
 app.use('/upload', express.static('upload'));
 
-app.all('*', function(req, res, next) {
-    res.header("Access-Control-Allow-Origin", "*");
-    res.header('Access-Control-Allow-Methods', 'PUT, GET, POST, DELETE, OPTIONS');
-    res.header("Access-Control-Allow-Headers", "X-Requested-With");
-    res.header('Access-Control-Allow-Headers', 'Content-Type');
-    next();
-});
 //中间件。处理登陆状态
 app.use((req, res, next) => {
     if (req.url == '/login' || req.url == '/doLogin') {
@@ -48,6 +40,10 @@ app.use((req, res, next) => {
         }
     }
 });
+app.get("/*",function (req, res, next) {
+    res.setHeader('Last-Modified',(new Date()).toUTCString());
+    next();
+})
 app.get('/', (req, res) => {
     res.send('index');
 });

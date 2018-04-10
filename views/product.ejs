@@ -92,6 +92,7 @@
     $("#page-container-static-normal").on("pageChanged", function (event, params) {
         const pageNum=params.pageNum;
         const pageSize=params.pageSize;
+        
         // $.ajax({
         //     url:'/product?t='+new Date().getTime(),
         //     data:{pageNum,pageSize},
@@ -103,7 +104,6 @@
         //     }
         // })
         const url=window.location.href.split('?')[0];
-        console.log(url)
         window.location.href=url+"?pageNum="+pageNum+'&pageSize='+pageSize;
         
     })
