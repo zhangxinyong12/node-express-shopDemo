@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>websocket-node-练习</title>
+</head>
+<body>
+    <h2>websocket-node-练习</h2>
+    <div>
+        <h4>接收到的数据</h4>
+        <ul id="data"> 
+            
+        </ul>
+    </div>
+</body>
+<script>
+    const render=(obj,data)=>{
+        const li=`<li>${data}</li>`;
+        obj.innerHTML+=li;
+    };
+    const ul=document.getElementById('data');
+    const ws=new WebSocket('ws://localhost:8989'); //创建实例
+    ws.onopen=(e)=>{ //链接
+        console.log('链接到websocket');
+        const a={a:'1'};//对象需要转换一下
+        ws.send(JSON.stringify(a));//发送数据
+    };
+    ws.onmessage = function (e) { //接收
+        const  received_msg = JSON.parse(e.data).a; 
+        render(ul,received_msg);
+        console.log(received_msg)
+    };
+</script>
+</html>

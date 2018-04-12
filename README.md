@@ -1,6 +1,6 @@
 # node-express 练习
 ### 开始
-1. 安装node 6.11
+1. 安装node （8.7）
 2. 安装cnpm （注：为了方便起见，node_modules以上传）
 3. 安装本地 mongodb
 ```js
@@ -19,4 +19,6 @@
 
 ######
  项目不忙的时候，练习node。加油！！！！！！
- 坑啊。参数不对，竟然报我数据库链接
+
+#### 其他小demo
+ 1. websocket
